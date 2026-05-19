@@ -12,14 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   try {
     if ($action === 'create') {
-      // Création d'un nouvel utilisateur
       $passwordHash = password_hash($_POST['password'], PASSWORD_BCRYPT);
 
       $stmt = $pdo->prepare("INSERT INTO utilisateurs (nom, prenom, email, mot_de_passe, role) VALUES (?, ?, ?, ?, ?)");
       $stmt->execute([$_POST['nom'], $_POST['prenom'], $_POST['email'], $passwordHash, $_POST['role']]);
       $userId = $pdo->lastInsertId();
 
-      // Insertion dans la table spécifique selon le rôle
       if ($_POST['role'] === 'etudiant') {
         $stmt = $pdo->prepare("INSERT INTO etudiants (utilisateur_id, matricule, date_naissance, lieu_naissance, sexe, classe_id) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->execute([$userId, $_POST['matricule'], $_POST['date_naissance'], $_POST['lieu_naissance'], $_POST['sexe'], $_POST['classe_id'] ?: null]);
@@ -30,18 +28,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       $_SESSION['flash'] = ['type' => 'success', 'message' => 'Utilisateur créé avec succès.'];
     } elseif ($action === 'update') {
-      // Mise à jour d'un utilisateur
       $stmt = $pdo->prepare("UPDATE utilisateurs SET nom = ?, prenom = ?, email = ?, role = ? WHERE id = ?");
       $stmt->execute([$_POST['nom'], $_POST['prenom'], $_POST['email'], $_POST['role'], $_POST['user_id']]);
 
-      // Mise à jour du mot de passe si fourni
       if (!empty($_POST['password'])) {
         $passwordHash = password_hash($_POST['password'], PASSWORD_BCRYPT);
         $stmt = $pdo->prepare("UPDATE utilisateurs SET mot_de_passe = ? WHERE id = ?");
         $stmt->execute([$passwordHash, $_POST['user_id']]);
       }
 
-      // Mise à jour de la table spécifique
       if ($_POST['role'] === 'etudiant') {
         $stmt = $pdo->prepare("UPDATE etudiants SET matricule = ?, date_naissance = ?, lieu_naissance = ?, sexe = ?, classe_id = ? WHERE utilisateur_id = ?");
         $stmt->execute([$_POST['matricule'], $_POST['date_naissance'], $_POST['lieu_naissance'], $_POST['sexe'], $_POST['classe_id'] ?: null, $_POST['user_id']]);
@@ -52,13 +47,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       $_SESSION['flash'] = ['type' => 'success', 'message' => 'Utilisateur mis à jour avec succès.'];
     } elseif ($action === 'delete') {
-      // Suppression d'un utilisateur
       $pdo->prepare("DELETE FROM etudiants WHERE utilisateur_id = ?")->execute([$_POST['user_id']]);
       $pdo->prepare("DELETE FROM enseignants WHERE utilisateur_id = ?")->execute([$_POST['user_id']]);
       $pdo->prepare("DELETE FROM utilisateurs WHERE id = ?")->execute([$_POST['user_id']]);
       $_SESSION['flash'] = ['type' => 'success', 'message' => 'Utilisateur supprimé avec succès.'];
     } elseif ($action === 'reset_password') {
-      // Réinitialisation du mot de passe uniquement
       $newPassword = trim($_POST['new_password'] ?? '');
       if ($newPassword === '' || strlen($newPassword) < 6) {
         throw new Exception('Le nouveau mot de passe doit contenir au moins 6 caractères.');
@@ -96,7 +89,6 @@ $classes = $pdo->query("SELECT * FROM classes ORDER BY nom")->fetchAll();
 include __DIR__ . '/../../includes/header.php';
 ?>
 
-<!-- Affichage des messages flash -->
 <?php if (!empty($_SESSION['flash'])): ?>
   <div class="mb-4 px-4 py-3 rounded-xl text-sm flex items-center gap-2 border <?= $_SESSION['flash']['type'] === 'success' ? 'bg-green-50 text-green-700 border-green-200' : 'bg-red-50 text-red-700 border-red-200' ?>">
     <i class="<?= $_SESSION['flash']['type'] === 'success' ? 'ri-checkbox-circle-line' : 'ri-error-warning-line' ?> mr-1"></i>
@@ -105,7 +97,6 @@ include __DIR__ . '/../../includes/header.php';
   <?php $_SESSION['flash'] = null; ?>
 <?php endif; ?>
 
-<!-- Welcome Banner -->
 <div class="mb-6">
   <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-5 border border-blue-100">
     <div class="flex items-center justify-between flex-wrap gap-4">
@@ -126,7 +117,6 @@ include __DIR__ . '/../../includes/header.php';
   </div>
 </div>
 
-<!-- Tableau des utilisateurs -->
 <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
   <div class="overflow-x-auto">
     <table class="w-full text-sm">
@@ -216,7 +206,6 @@ include __DIR__ . '/../../includes/header.php';
   </div>
 </div>
 
-<!-- Modal Création -->
 <div id="modalCreate" class="hidden fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
   <div class="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-xl">
     <div class="sticky top-0 bg-white p-5 border-b flex justify-between items-center">
@@ -296,7 +285,6 @@ include __DIR__ . '/../../includes/header.php';
         </div>
       </div>
 
-      <!-- Champs Enseignant -->
       <div id="ensFields" class="hidden space-y-4 p-4 bg-slate-50 rounded-xl">
         <div>
           <label class="block text-sm font-medium text-slate-700 mb-1">Matricule *</label>
@@ -314,7 +302,6 @@ include __DIR__ . '/../../includes/header.php';
         </div>
       </div>
 
-      <!-- Champs Admin -->
       <div id="adminFields" class="hidden p-4 bg-slate-50 rounded-xl text-center text-slate-500 text-sm">
         <i class="ri-information-line"></i> Aucune information supplémentaire requise pour un administrateur.
       </div>
@@ -326,7 +313,6 @@ include __DIR__ . '/../../includes/header.php';
   </div>
 </div>
 
-<!-- Modal Édition -->
 <div id="modalEdit" class="hidden fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
   <div class="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-xl">
     <div class="sticky top-0 bg-white p-5 border-b flex justify-between items-center">
@@ -431,7 +417,6 @@ include __DIR__ . '/../../includes/header.php';
   </div>
 </div>
 
-<!-- Modal Réinitialisation Mot de Passe -->
 <div id="modalResetPassword" class="hidden fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
   <div class="bg-white rounded-2xl w-full max-w-md shadow-xl">
     <div class="p-5 border-b flex justify-between items-center">
@@ -464,7 +449,6 @@ include __DIR__ . '/../../includes/header.php';
 </div>
 
 <script>
-  // Gestion de l'affichage des champs selon le rôle (création)
   const roleSelect = document.getElementById('roleSelect');
   const etuFields = document.getElementById('etuFields');
   const ensFields = document.getElementById('ensFields');
@@ -494,7 +478,6 @@ include __DIR__ . '/../../includes/header.php';
     toggleFields();
   }
 
-  // Fonction d'édition
   function editUser(user) {
     document.getElementById('edit_user_id').value = user.id;
     document.getElementById('edit_nom').value = user.nom || '';
@@ -502,7 +485,6 @@ include __DIR__ . '/../../includes/header.php';
     document.getElementById('edit_email').value = user.email || '';
     document.getElementById('edit_role').value = user.role || 'etudiant';
 
-    // Gérer l'affichage des champs selon le rôle
     const editRole = user.role;
     const editEtu = document.getElementById('editEtuFields');
     const editEns = document.getElementById('editEnsFields');
@@ -529,7 +511,6 @@ include __DIR__ . '/../../includes/header.php';
     document.getElementById('modalEdit').classList.remove('hidden');
   }
 
-  // Fonction de réinitialisation du mot de passe
   function resetPassword(userId, userName) {
     document.getElementById('reset_user_id').value = userId;
     document.getElementById('reset_user_name').value = userName;

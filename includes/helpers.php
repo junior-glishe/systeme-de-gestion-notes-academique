@@ -1,8 +1,6 @@
 <?php
 
-/**
- * Fonctions utilitaires
- */
+
 
 function calculerMoyenne($interro, $devoir)
 {

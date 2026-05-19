@@ -82,7 +82,6 @@ $current = $_SERVER['SCRIPT_NAME'];
       background-color: #f8fafc;
     }
 
-    /* Style pour la sidebar */
     .sidebar-link {
       transition: all 0.2s ease;
       position: relative;

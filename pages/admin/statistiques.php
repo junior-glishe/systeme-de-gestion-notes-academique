@@ -24,7 +24,6 @@ $repartition = $pdo->query("SELECT
 include __DIR__ . '/../../includes/header.php';
 ?>
 
-<!-- Welcome Banner -->
 <div class="mb-6">
   <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-5 border border-blue-100">
     <div class="flex items-center gap-4">
@@ -39,9 +38,7 @@ include __DIR__ . '/../../includes/header.php';
   </div>
 </div>
 
-<!-- Stats Cards -->
 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
-  <!-- Carte Taux de réussite -->
   <div class="bg-gradient-to-br from-emerald-500 to-emerald-700 text-white rounded-2xl p-5 shadow-lg">
     <div class="flex items-center justify-between">
       <div>
@@ -55,7 +52,6 @@ include __DIR__ . '/../../includes/header.php';
     </div>
   </div>
 
-  <!-- Carte informations supplémentaires -->
   <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
     <div class="grid grid-cols-2 gap-3">
       <div class="text-center p-2 bg-slate-50 rounded-xl">
@@ -70,9 +66,7 @@ include __DIR__ . '/../../includes/header.php';
   </div>
 </div>
 
-<!-- Graphiques -->
 <div class="grid lg:grid-cols-2 gap-6">
-  <!-- Diagramme circulaire - Répartition des mentions -->
   <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
     <h3 class="font-semibold text-slate-800 mb-3 flex items-center gap-2 text-sm">
       <i class="ri-pie-chart-line text-blue-600"></i> Répartition des mentions
@@ -82,7 +76,6 @@ include __DIR__ . '/../../includes/header.php';
     </div>
   </div>
 
-  <!-- Diagramme barres - Performance par matière -->
   <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
     <h3 class="font-semibold text-slate-800 mb-3 flex items-center gap-2 text-sm">
       <i class="ri-bar-chart-2-line text-blue-600"></i> Performance par matière
@@ -93,7 +86,6 @@ include __DIR__ . '/../../includes/header.php';
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-  // Graphique des matières (barres)
   const ctxMatieres = document.getElementById('chartMatieres').getContext('2d');
   new Chart(ctxMatieres, {
     type: 'bar',
@@ -151,7 +143,6 @@ include __DIR__ . '/../../includes/header.php';
     }
   });
 
-  // Graphique des mentions (donut)
   const ctxMentions = document.getElementById('chartMentions').getContext('2d');
   new Chart(ctxMentions, {
     type: 'doughnut',

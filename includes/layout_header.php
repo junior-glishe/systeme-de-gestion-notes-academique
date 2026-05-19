@@ -1,9 +1,6 @@
 <?php
 
-/**
- * Header HTML commun (head + body open + sidebar + navbar)
- * Variables attendues: $pageTitle, $activeMenu
- */
+
 
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/helpers.php';
@@ -91,7 +88,6 @@ $currentMenu = $menus[$role] ?? [];
 
 <body class="bg-slate-100">
   <div class="flex min-h-screen">
-    <!-- Sidebar -->
     <aside id="sidebar" class="bg-slate-900 text-slate-200 w-64 flex flex-col fixed inset-y-0 left-0 z-30 transition-all duration-300">
       <div class="h-16 flex items-center justify-between px-4 border-b border-slate-800">
         <div class="flex items-center gap-2">
@@ -118,9 +114,7 @@ $currentMenu = $menus[$role] ?? [];
       </div>
     </aside>
 
-    <!-- Main -->
     <div id="mainArea" class="flex-1 ml-64 transition-all duration-300">
-      <!-- Navbar -->
       <header class="h-16 bg-white border-b border-slate-200 sticky top-0 z-20 flex items-center justify-between px-6">
         <h1 class="text-lg font-semibold text-slate-800"><?= e($pageTitle ?? 'Tableau de bord') ?></h1>
         <div class="flex items-center gap-4">

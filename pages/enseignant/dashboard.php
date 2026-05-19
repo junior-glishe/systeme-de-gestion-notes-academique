@@ -7,7 +7,6 @@ date_default_timezone_set('Africa/Porto-Novo');
 
 $user = currentUser();
 
-// Récupérer les informations de l'enseignant
 $ens = $pdo->prepare("SELECT * FROM enseignants WHERE utilisateur_id = ?");
 $ens->execute([$user['id']]);
 $ens = $ens->fetch();
@@ -24,7 +23,6 @@ if ($ens) {
   $matieres = $stmt->fetchAll();
 }
 
-// Récupérer quelques statistiques
 $nbEtudiants = 0;
 $nbNotes = 0;
 
@@ -46,7 +44,6 @@ if ($ens) {
 include __DIR__ . '/../../includes/header.php';
 ?>
 
-<!-- Welcome Banner -->
 <div class="mb-6">
   <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-6 text-white shadow-lg">
     <div class="flex items-center justify-between flex-wrap gap-4">
@@ -78,7 +75,6 @@ include __DIR__ . '/../../includes/header.php';
   </div>
 </div>
 
-<!-- Cartes de statistiques -->
 <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
   <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100">
     <div class="flex items-center justify-between">
@@ -115,7 +111,6 @@ include __DIR__ . '/../../includes/header.php';
   </div>
 </div>
 
-<!-- Mes matières -->
 <div class="flex items-center justify-between mb-4">
   <h2 class="font-semibold text-slate-800 text-lg">
     <i class="ri-book-2-line text-blue-600 mr-2"></i>Mes matières
@@ -160,7 +155,6 @@ include __DIR__ . '/../../includes/header.php';
   <?php endif; ?>
 </div>
 
-<!-- Section d'aide rapide -->
 <div class="mt-6 bg-blue-50 rounded-2xl p-4 border border-blue-100">
   <div class="flex items-center gap-3">
     <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">

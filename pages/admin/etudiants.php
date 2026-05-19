@@ -25,7 +25,6 @@ $classes = $pdo->query("SELECT * FROM classes")->fetchAll();
 include __DIR__ . '/../../includes/header.php';
 ?>
 
-<!-- Welcome Banner -->
 <div class="mb-6">
   <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-5 border border-blue-100">
     <div class="flex items-center justify-between flex-wrap gap-4">
@@ -93,7 +92,6 @@ include __DIR__ . '/../../includes/header.php';
   </div>
 </div>
 
-<!-- Modal -->
 <div id="modal" class="hidden fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50">
   <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6">
     <div class="flex justify-between items-center mb-4">

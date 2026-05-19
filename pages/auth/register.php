@@ -32,7 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   } elseif ($password !== $confirm) {
     $error = "Les deux mots de passe ne correspondent pas.";
   } else {
-    // Unicité email + matricule
     $st = $pdo->prepare("SELECT id FROM utilisateurs WHERE email = ?");
     $st->execute([$email]);
     if ($st->fetch()) {
@@ -73,7 +72,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>body{font-family:'Inter',sans-serif}</style>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif
+    }
+  </style>
 </head>
 
 <body class="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center p-4">

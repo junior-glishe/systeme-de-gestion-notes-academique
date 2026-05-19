@@ -30,7 +30,6 @@ if ($et) {
 include __DIR__ . '/../../includes/header.php';
 ?>
 
-<!-- Bouton impression -->
 <div class="no-print mb-4 flex flex-col items-start gap-3">
   <div class="text-xs text-slate-500">
     Pour imprimer un bulletin propre, décochez « En-têtes et pieds de page » dans les options d'impression de votre navigateur.
@@ -40,9 +39,7 @@ include __DIR__ . '/../../includes/header.php';
   </button>
 </div>
 
-<!-- Bulletin -->
 <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-8 max-w-4xl mx-auto print:shadow-none print:p-4">
-  <!-- Header du bulletin -->
   <div class="flex justify-between items-start border-b-4 border-blue-700 pb-4">
     <div>
       <div class="text-xs text-slate-500">RÉPUBLIQUE DU BÉNIN</div>
@@ -57,7 +54,6 @@ include __DIR__ . '/../../includes/header.php';
 
   <h1 class="text-center text-xl font-bold mt-4 mb-6 text-slate-800">BULLETIN DE NOTES — SEMESTRE 1</h1>
 
-  <!-- Infos étudiant -->
   <div class="grid grid-cols-2 gap-4 text-sm mb-6 bg-slate-50 p-4 rounded-xl">
     <div><span class="text-slate-500">Matricule :</span> <strong class="text-slate-800"><?= e($et['matricule']) ?></strong></div>
     <div><span class="text-slate-500">Classe :</span> <strong class="text-slate-800"><?= e($et['classe']) ?></strong></div>
@@ -161,7 +157,6 @@ include __DIR__ . '/../../includes/header.php';
   </div>
 </div>
 
-<!-- Styles pour l'impression -->
 <style media="print">
   @page {
     margin: 15mm;

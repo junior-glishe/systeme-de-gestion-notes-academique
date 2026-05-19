@@ -10,7 +10,6 @@ $ens->execute([$user['id']]);
 $ens = $ens->fetch();
 $ensId = $ens['id'] ?? 0;
 
-// Toutes les notes validées concernant les matières de l'enseignant
 $rows = [];
 if ($ensId) {
   $stmt = $pdo->prepare("SELECT h.*, m.nom AS matiere, m.code, c.nom AS classe,
@@ -65,9 +64,11 @@ include __DIR__ . '/../../includes/header.php';
           </tr>
         <?php endforeach; ?>
         <?php if (empty($rows)): ?>
-          <tr><td colspan="7" class="text-center py-12 text-slate-400">
-            <i class="ri-history-line text-4xl mb-2 block"></i>Aucune note validée pour le moment.
-          </td></tr>
+          <tr>
+            <td colspan="7" class="text-center py-12 text-slate-400">
+              <i class="ri-history-line text-4xl mb-2 block"></i>Aucune note validée pour le moment.
+            </td>
+          </tr>
         <?php endif; ?>
       </tbody>
     </table>

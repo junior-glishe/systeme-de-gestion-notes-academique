@@ -23,7 +23,6 @@ if ($et) {
   $moy = $r['moy'] ?? 0;
   $nbNotes = $r['nb'];
 
-  // Meilleure note
   $stmt = $pdo->prepare("SELECT m.nom, n.moyenne FROM notes n JOIN matieres m ON n.matiere_id = m.id WHERE n.etudiant_id = ? AND n.validee = 1 ORDER BY n.moyenne DESC LIMIT 1");
   $stmt->execute([$et['id']]);
   $best = $stmt->fetch();
@@ -32,7 +31,6 @@ if ($et) {
     $meilleureNote = $best['moyenne'];
   }
 
-  // Rang dans la classe
   $stmt = $pdo->prepare("SELECT e.id, AVG(n.moyenne) m FROM etudiants e JOIN notes n ON n.etudiant_id = e.id WHERE e.classe_id = ? GROUP BY e.id ORDER BY m DESC");
   $stmt->execute([$et['classe_id']]);
   $i = 1;
@@ -48,7 +46,6 @@ if ($et) {
 include __DIR__ . '/../../includes/header.php';
 ?>
 
-<!-- Welcome Banner -->
 <div class="mb-6">
   <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-6 text-white shadow-lg">
     <div class="flex items-center justify-between flex-wrap gap-4">
@@ -72,7 +69,6 @@ include __DIR__ . '/../../includes/header.php';
   </div>
 </div>
 
-<!-- Cartes statistiques -->
 <div class="grid grid-cols-1 md:grid-cols-4 gap-5 mb-6">
   <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 hover:shadow-md transition">
     <div class="flex items-center justify-between">
@@ -137,7 +133,6 @@ include __DIR__ . '/../../includes/header.php';
   </div>
 </div>
 
-<!-- Meilleure performance -->
 <?php if ($meilleureMatiere != '—'): ?>
   <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-4 mb-6 border border-amber-200">
     <div class="flex items-center gap-3">
@@ -154,7 +149,6 @@ include __DIR__ . '/../../includes/header.php';
   </div>
 <?php endif; ?>
 
-<!-- Actions rapides -->
 <div class="flex gap-3">
   <a href="notes.php" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm flex items-center gap-2 transition">
     <i class="ri-file-list-line"></i> Voir mes notes

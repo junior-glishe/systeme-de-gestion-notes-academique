@@ -85,7 +85,6 @@ function checkCsrf(): void
 function baseUrl(): string
 {
     $script = dirname($_SERVER['SCRIPT_NAME']);
-    // remonte jusqu'à la racine du projet
     $script = preg_replace('#/pages(/.*)?$#', '', $script);
     return rtrim($script, '/');
 }

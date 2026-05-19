@@ -30,7 +30,7 @@ if ($et) {
 include __DIR__ . '/../../includes/header.php';
 ?>
 
-<!-- Welcome Banner -->
+
 <div class="mb-6">
   <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-5 text-white shadow-lg">
     <div class="flex items-center justify-between flex-wrap gap-4">
@@ -128,7 +128,6 @@ include __DIR__ . '/../../includes/header.php';
   </div>
 </div>
 
-<!-- Actions -->
 <div class="mt-6 flex justify-end">
   <a href="bulletin.php" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm flex items-center gap-2 transition">
     <i class="ri-printer-line"></i> Voir mon bulletin

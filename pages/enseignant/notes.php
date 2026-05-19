@@ -27,7 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $matiere) {
 
   if ($action === 'save') {
     foreach (($_POST['notes'] ?? []) as $eid => $n) {
-      // Ignorer les notes déjà validées (sécurité)
       $check = $pdo->prepare("SELECT validee FROM notes WHERE etudiant_id = ? AND matiere_id = ?");
       $check->execute([(int)$eid, $matiereId]);
       $row = $check->fetch();
@@ -49,7 +48,6 @@ $etudiants = [];
 $nbValidees = 0;
 $nbEnAttente = 0;
 if ($matiere) {
-  // On n'affiche QUE les étudiants dont la note n'est pas encore validée
   $stmt = $pdo->prepare("SELECT e.*, n.id AS note_id, n.note_interro, n.note_devoir, n.moyenne, n.validee
         FROM etudiants e
         LEFT JOIN notes n ON n.etudiant_id = e.id AND n.matiere_id = ?
@@ -76,7 +74,6 @@ include __DIR__ . '/../../includes/header.php';
   <?php $_SESSION['flash'] = null; ?>
 <?php endif; ?>
 
-<!-- Welcome Banner -->
 <div class="mb-6">
   <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-5 border border-blue-100">
     <div class="flex items-center justify-between flex-wrap gap-4">
@@ -166,10 +163,12 @@ include __DIR__ . '/../../includes/header.php';
             </tr>
           <?php endforeach; ?>
           <?php if (empty($etudiants)): ?>
-            <tr><td colspan="5" class="text-center py-12 text-slate-400">
-              <i class="ri-check-double-line text-4xl mb-2 block text-green-400"></i>
-              Toutes les notes ont été validées par le responsable académique pour cette matière.
-            </td></tr>
+            <tr>
+              <td colspan="5" class="text-center py-12 text-slate-400">
+                <i class="ri-check-double-line text-4xl mb-2 block text-green-400"></i>
+                Toutes les notes ont été validées par le responsable académique pour cette matière.
+              </td>
+            </tr>
           <?php endif; ?>
         </tbody>
       </table>

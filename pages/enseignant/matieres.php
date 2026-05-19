@@ -17,7 +17,6 @@ $matieres = $matieres->fetchAll();
 include __DIR__ . '/../../includes/header.php';
 ?>
 
-<!-- Welcome Banner -->
 <div class="mb-6">
   <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-5 border border-blue-100">
     <div class="flex items-center gap-4">
