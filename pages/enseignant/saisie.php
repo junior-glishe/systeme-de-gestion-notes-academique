@@ -19,7 +19,8 @@ if ($ens) {
 
 include __DIR__ . '/../../includes/header.php';
 
-$msg = null; $err = null;
+$msg = null;
+$err = null;
 $matiere_id = (int)($_GET['matiere'] ?? ($matieres[0]['id'] ?? 0));
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -82,7 +83,8 @@ if ($matiere_id) {
   }
 }
 $csrf = csrfToken();
-function calculerMoyenneEnseignant($i, $d) {
+function calculerMoyenneEnseignant($i, $d)
+{
   return $i && $d ? round($i * 0.3 + $d * 0.7, 2) : null;
 }
 ?>
@@ -176,10 +178,12 @@ function calculerMoyenneEnseignant($i, $d) {
           </tr>
         <?php endforeach; ?>
         <?php if (empty($etudiants)): ?>
-          <tr><td colspan="6" class="text-center py-12 text-slate-400">
-            <i class="fas fa-check-double text-4xl mb-2 block text-green-400"></i>
-            Aucun étudiant en attente — toutes les notes ont été approuvées par le responsable.
-          </td></tr>
+          <tr>
+            <td colspan="6" class="text-center py-12 text-slate-400">
+              <i class="fas fa-check-double text-4xl mb-2 block text-green-400"></i>
+              Aucun étudiant en attente — toutes les notes ont été approuvées par le responsable.
+            </td>
+          </tr>
         <?php endif; ?>
       </tbody>
     </table>
