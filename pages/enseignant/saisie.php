@@ -158,8 +158,8 @@ function calculerMoyenneEnseignant($i, $d) {
               <input type="hidden" name="action" value="save">
               <input type="hidden" name="matiere_id" value="<?= $matiere_id ?>">
               <input type="hidden" name="etudiant_id" value="<?= $et['id'] ?>">
-              <td class="px-5 py-2"><input type="number" step="0.25" min="0" max="20" name="interro" value="<?= e($et['note_interro']) ?>" class="w-20 px-3 py-2 border border-slate-200 rounded-xl text-center focus:ring-2 focus:ring-blue-500 outline-none"></td>
-              <td class="px-5 py-2"><input type="number" step="0.25" min="0" max="20" name="devoir" value="<?= e($et['note_devoir']) ?>" class="w-20 px-3 py-2 border border-slate-200 rounded-xl text-center focus:ring-2 focus:ring-blue-500 outline-none"></td>
+              <td class="px-5 py-2"><input type="number" step="0.25" min="0" max="20" name="interro" value="<?= e($et['note_interro']) ?>" oninvalid="this.setCustomValidity('La note doit être comprise entre 0 et 20.')" oninput="this.setCustomValidity('')" class="w-20 px-3 py-2 border border-slate-200 rounded-xl text-center focus:ring-2 focus:ring-blue-500 outline-none"></td>
+              <td class="px-5 py-2"><input type="number" step="0.25" min="0" max="20" name="devoir" value="<?= e($et['note_devoir']) ?>" oninvalid="this.setCustomValidity('La note doit être comprise entre 0 et 20.')" oninput="this.setCustomValidity('')" class="w-20 px-3 py-2 border border-slate-200 rounded-xl text-center focus:ring-2 focus:ring-blue-500 outline-none"></td>
               <td class="px-5 py-2 text-center font-semibold <?= $moy !== null && $moy >= 10 ? 'text-green-600' : 'text-red-600' ?>"><?= $moy !== null ? $moy . '/20' : '—' ?></td>
               <td class="px-5 py-2 text-center space-x-1">
                 <button class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded-xl transition"><i class="fas fa-save mr-1"></i>Enregistrer</button>
